@@ -1,1 +1,1 @@
-# StudyFlow---AI-Powered-Study-Assistant-Note-Organizer
+# StudyFlow-AI-Powered-Study-Assistant-Note-Organizer
