@@ -59,6 +59,9 @@ StudyFlow integrates active recall methodology with generative artificial intell
 * Git
 * OpenAI API Key
 
+<img width="998" height="227" alt="dd" src="https://github.com/user-attachments/assets/1fbf5e4d-21dc-4efb-a16d-d44a56a40abd" />
+
+
 ### Backend Setup
 
 ```bash
