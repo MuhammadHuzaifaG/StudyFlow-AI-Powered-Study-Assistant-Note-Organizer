@@ -163,7 +163,7 @@ git push heroku main
 
 * `POST /api/ai/tutor/ask` - Submit a prompt to the AI tutor.
 * `POST /api/ai/study-plan/generate` - Produce a customized study schedule.
-* `POST /api/ai/practice-problems` - Generate practice problems based on input topics.
+* `POST /api/ai/practice-problems` - Generate practice problems based on input topics. 
 
 ### Analytics & Collaboration
 
