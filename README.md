@@ -12,6 +12,8 @@ Self-directed learners and students face significant workflow bottlenecks:
 * **Inefficient Retention:** Standard study schedules do not account for memory decay, resulting in suboptimal review timing.
 * **Manual Preparation:** Crafting flashcards, study schedules, and practice questions manually consumes time that could be spent learning.
 
+<img width="1227" height="536" alt="ghh" src="https://github.com/user-attachments/assets/4ca240ed-be2b-472c-b5fe-df2e63c523fe" />
+
 ## Technical Solution
 
 StudyFlow integrates active recall methodology with generative artificial intelligence:
