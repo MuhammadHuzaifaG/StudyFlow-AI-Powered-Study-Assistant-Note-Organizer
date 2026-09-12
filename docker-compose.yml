@@ -1,0 +1,43 @@
+# docker-compose.yml (For Production Deployment)
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: studyflow_backend
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_URL=postgresql://user:password@db:5432/studyflow
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+    command: gunicorn -w 4 -b 0.0.0.0:5000 app:app
+
+  db:
+    image: postgres:14
+    container_name: studyflow_db
+    environment:
+      - POSTGRES_USER=studyflow
+      - POSTGRES_PASSWORD=secure_password
+      - POSTGRES_DB=studyflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  frontend:
+    build: ./frontend
+    container_name: studyflow_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000/api
+
+volumes:
+  postgres_data:

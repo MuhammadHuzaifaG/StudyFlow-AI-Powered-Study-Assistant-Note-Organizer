@@ -1,0 +1,390 @@
+<!-- frontend/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - StudyFlow</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="logo-icon">📚</span>
+                <span class="logo-text">StudyFlow</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <span class="icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-section="notes">
+                    <span class="icon">📝</span>
+                    <span>Notes</span>
+                </a>
+                <a href="#" class="nav-item" data-section="flashcards">
+                    <span class="icon">📇</span>
+                    <span>Flashcards</span>
+                </a>
+                <a href="#" class="nav-item" data-section="study-plan">
+                    <span class="icon">📅</span>
+                    <span>Study Plan</span>
+                </a>
+                <a href="#" class="nav-item" data-section="ai-tutor">
+                    <span class="icon">🤖</span>
+                    <span>AI Tutor</span>
+                </a>
+                <a href="#" class="nav-item" data-section="analytics">
+                    <span class="icon">📈</span>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item" data-section="collaborate">
+                    <span class="icon">👥</span>
+                    <span>Collaborate</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn-logout" onclick="handleLogout()">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="search-box">
+                    <input type="text" placeholder="🔍 Search notes, flashcards..." id="searchInput">
+                </div>
+                <div class="user-profile">
+                    <span id="userName">User</span>
+                    <img src="https://via.placeholder.com/40" alt="Profile" class="profile-pic">
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="section-header">
+                    <h1>Welcome back! 👋</h1>
+                    <p id="dateDisplay">Monday, September 12, 2026</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Study Stats -->
+                    <div class="stat-card">
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-content">
+                            <h3>Notes Created</h3>
+                            <p class="stat-number" id="notesCount">0</p>
+                            <span class="stat-label">This month</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-content">
+                            <h3>Study Time</h3>
+                            <p class="stat-number" id="studyTime">0h</p>
+                            <span class="stat-label">This week</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-content">
+                            <h3>Accuracy</h3>
+                            <p class="stat-number" id="accuracy">0%</p>
+                            <span class="stat-label">On flashcards</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-content">
+                            <h3>Study Streak</h3>
+                            <p class="stat-number" id="streak">0</p>
+                            <span class="stat-label">days in a row</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h2>Quick Actions</h2>
+                    <div class="actions-grid">
+                        <button class="action-btn" onclick="switchSection('notes')">
+                            <span class="action-icon">➕</span>
+                            <span>Create New Note</span>
+                        </button>
+                        <button class="action-btn" onclick="openAITutor()">
+                            <span class="action-icon">🤖</span>
+                            <span>Ask AI Tutor</span>
+                        </button>
+                        <button class="action-btn" onclick="generateStudyPlan()">
+                            <span class="action-icon">📋</span>
+                            <span>Generate Study Plan</span>
+                        </button>
+                        <button class="action-btn" onclick="startPomodoroSession()">
+                            <span class="action-icon">⏲️</span>
+                            <span>Pomodoro Timer</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="recent-activity">
+                    <h2>Recent Activity</h2>
+                    <div id="recentList" class="activity-list">
+                        <p class="empty-state">No recent activity. Start by creating a note!</p>
+                    </div>
+                </div>
+
+                <!-- Study Streak Calendar -->
+                <div class="study-calendar">
+                    <h2>Study Streak Calendar</h2>
+                    <div id="calendarGrid" class="calendar-grid"></div>
+                </div>
+            </section>
+
+            <!-- Notes Section -->
+            <section id="notes" class="section">
+                <div class="section-header">
+                    <h1>📝 My Notes</h1>
+                    <button class="btn-primary" onclick="openNoteEditor()">+ Create Note</button>
+                </div>
+
+                <!-- Note Filter -->
+                <div class="note-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="recent">Recent</button>
+                    <button class="filter-btn" data-filter="flagged">Flagged</button>
+                    <button class="filter-btn" data-filter="shared">Shared</button>
+                </div>
+
+                <!-- Notes Grid -->
+                <div id="notesGrid" class="notes-grid">
+                    <div class="empty-state">
+                        <p>📭 No notes yet. Create one to get started!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Flashcards Section -->
+            <section id="flashcards" class="section">
+                <div class="section-header">
+                    <h1>📇 Flashcards</h1>
+                    <button class="btn-primary" onclick="openFlashcardGenerator()">+ Generate from Note</button>
+                </div>
+
+                <div class="flashcard-container">
+                    <div id="flashcardList" class="flashcard-list">
+                        <div class="empty-state">
+                            <p>No flashcard sets yet. Generate from a note!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Study Plan Section -->
+            <section id="study-plan" class="section">
+                <div class="section-header">
+                    <h1>📅 AI Study Plan</h1>
+                    <button class="btn-primary" onclick="generateStudyPlan()">Generate New Plan</button>
+                </div>
+
+                <div class="study-plan-content">
+                    <div id="studyPlanContent" class="plan-container">
+                        <div class="empty-state">
+                            <p>📋 No study plan yet. Generate one based on your notes!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Tutor Section -->
+            <section id="ai-tutor" class="section">
+                <div class="section-header">
+                    <h1>🤖 AI Tutor</h1>
+                </div>
+
+                <div class="tutor-container">
+                    <div id="chatHistory" class="chat-history">
+                        <div class="bot-message">
+                            <p>Hello! 👋 I'm your AI Study Tutor. I can help you:</p>
+                            <ul>
+                                <li>Explain complex concepts</li>
+                                <li>Answer questions about your notes</li>
+                                <li>Create practice problems</li>
+                                <li>Suggest study strategies</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <textarea id="tutorInput" placeholder="Ask me anything..." rows="3"></textarea>
+                        <div class="input-actions">
+                            <button class="btn-icon" title="Attach file">📎</button>
+                            <button class="btn-primary" onclick="sendTutorMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics" class="section">
+                <div class="section-header">
+                    <h1>📈 Learning Analytics</h1>
+                </div>
+
+                <div class="analytics-grid">
+                    <!-- Study Time Chart -->
+                    <div class="analytics-card">
+                        <h3>Weekly Study Time</h3>
+                        <canvas id="studyTimeChart"></canvas>
+                    </div>
+
+                    <!-- Performance Chart -->
+                    <div class="analytics-card">
+                        <h3>Flashcard Performance</h3>
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+
+                    <!-- Subject Breakdown -->
+                    <div class="analytics-card">
+                        <h3>Topics Distribution</h3>
+                        <div id="topicsBreakdown" class="topics-list">
+                            <p class="empty-state">No data yet</p>
+                        </div>
+                    </div>
+
+                    <!-- Goals Progress -->
+                    <div class="analytics-card">
+                        <h3>Learning Goals</h3>
+                        <div id="goalsProgress" class="goals-list">
+                            <p class="empty-state">Set your first goal!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Collaborate Section -->
+            <section id="collaborate" class="section">
+                <div class="section-header">
+                    <h1>👥 Collaborate with Classmates</h1>
+                    <button class="btn-primary" onclick="openShareModal()">+ Share Notes</button>
+                </div>
+
+                <div class="collaborate-content">
+                    <!-- Shared Notes -->
+                    <div class="shared-notes">
+                        <h3>Shared with Me</h3>
+                        <div id="sharedList" class="shared-grid">
+                            <p class="empty-state">No shared notes yet</p>
+                        </div>
+                    </div>
+
+                    <!-- Study Groups -->
+                    <div class="study-groups">
+                        <h3>Study Groups</h3>
+                        <div id="groupsList" class="groups-grid">
+                            <p class="empty-state">You haven't joined any study groups</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Note Editor Modal -->
+    <div id="noteEditorModal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close" onclick="closeNoteEditor()">&times;</span>
+            <h2>Create New Note</h2>
+            
+            <div class="note-editor-form">
+                <input type="text" id="noteTitle" placeholder="Note Title" class="note-input">
+                
+                <div class="editor-toolbar">
+                    <button class="toolbar-btn" title="Bold" onclick="formatText('bold')"><b>B</b></button>
+                    <button class="toolbar-btn" title="Italic" onclick="formatText('italic')"><i>I</i></button>
+                    <button class="toolbar-btn" title="Underline" onclick="formatText('underline')" style="text-decoration: underline;">U</button>
+                    <div class="toolbar-divider"></div>
+                    <button class="toolbar-btn" title="Add List" onclick="formatText('insertUnorderedList')">• List</button>
+                    <button class="toolbar-btn" title="Add Code" onclick="formatText('insertHTML', '<code>')">{ }</button>
+                </div>
+
+                <textarea id="noteContent" placeholder="Start typing your notes here... AI will help you organize and summarize!" class="note-input large"></textarea>
+
+                <div class="note-tags">
+                    <input type="text" id="noteTags" placeholder="Add tags (comma separated)" class="note-input">
+                </div>
+
+                <div class="note-actions">
+                    <button class="btn-secondary" onclick="closeNoteEditor()">Cancel</button>
+                    <button class="btn-primary" onclick="saveNote()">Save Note</button>
+                    <button class="btn-accent" onclick="autoOrganizeNote()">✨ AI Organize</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Tutor Modal -->
+    <div id="tutorModal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close" onclick="closeTutorModal()">&times;</span>
+            <div class="tutor-container">
+                <div id="tutorChatHistory" class="chat-history"></div>
+                <div class="chat-input-area">
+                    <textarea id="tutorInputModal" placeholder="Ask me anything..." rows="3"></textarea>
+                    <button class="btn-primary" onclick="sendTutorMessageModal()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pomodoro Timer Modal -->
+    <div id="pomodoroModal" class="modal">
+        <div class="modal-content modal-medium">
+            <span class="close" onclick="closePomodoroModal()">&times;</span>
+            <h2>Pomodoro Timer ⏲️</h2>
+            
+            <div class="pomodoro-container">
+                <div class="timer-display">
+                    <span id="timerMinutes">25</span>:<span id="timerSeconds">00</span>
+                </div>
+                
+                <div class="pomodoro-controls">
+                    <button class="btn-primary" id="startBtn" onclick="startPomodoro()">Start</button>
+                    <button class="btn-secondary" id="pauseBtn" onclick="pausePomodoro()" style="display:none;">Pause</button>
+                    <button class="btn-secondary" onclick="resetPomodoro()">Reset</button>
+                </div>
+
+                <div class="pomodoro-mode">
+                    <label>
+                        <input type="radio" name="mode" value="work" checked onchange="changePomodoroMode(this.value)">
+                        Work (25 min)
+                    </label>
+                    <label>
+                        <input type="radio" name="mode" value="break" onchange="changePomodoroMode(this.value)">
+                        Break (5 min)
+                    </label>
+                </div>
+
+                <div class="pomodoro-sessions">
+                    <p>Sessions completed: <strong id="sessionsCount">0</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/utils.js"></script>
+</body>
+</html>
