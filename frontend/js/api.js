@@ -3,11 +3,10 @@ const API_BASE = 'http://localhost:5000/api';
 
 async function fetchAPI(endpoint, options = {}) {
     const url = `${API_BASE}${endpoint}`;
-    const token = localStorage.getItem('token');
     
     const headers = {
-        'Content-Type': 'application/json',
-        ...(token && { 'Authorization': `Bearer ${token}` })
+        'Content-Type': 'application/json'
+        // Token requirement removed - no authentication needed
     };
 
     try {
@@ -17,10 +16,6 @@ async function fetchAPI(endpoint, options = {}) {
         });
 
         if (!response.ok) {
-            if (response.status === 401) {
-                localStorage.removeItem('token');
-                window.location.href = '/';
-            }
             throw new Error(`API error: ${response.status}`);
         }
 
@@ -31,19 +26,7 @@ async function fetchAPI(endpoint, options = {}) {
     }
 }
 
-async function signup(name, email, password) {
-    return fetchAPI('/auth/signup', {
-        method: 'POST',
-        body: JSON.stringify({ name, email, password })
-    });
-}
-
-async function login(email, password) {
-    return fetchAPI('/auth/login', {
-        method: 'POST',
-        body: JSON.stringify({ email, password })
-    });
-}
+// Auth functions removed - no longer needed
 
 async function getNotes() {
     return fetchAPI('/notes');
