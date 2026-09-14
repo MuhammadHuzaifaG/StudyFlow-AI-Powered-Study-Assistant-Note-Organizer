@@ -5,12 +5,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyFlow - AI-Powered Study Assistant</title>
-    <script>
-        // Redirect directly to dashboard without login
-        window.location.href = './dashboard.html';
-    </script>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-    <p>Redirecting to StudyFlow Dashboard...</p>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">📚</span>
+                <span class="logo-text">StudyFlow</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#" class="nav-link">Docs</a>
+                <button class="btn-login" onclick="showLoginModal()">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Study Smarter, Not Harder</h1>
+            <p class="hero-subtitle">AI-powered note-taking, auto-summaries, flashcards & study schedules</p>
+            <button class="btn-primary" onclick="showSignupModal()">Get Started Free</button>
+            <p class="hero-note">No credit card required • 2,000+ students already using</p>
+        </div>
+        <div class="hero-image">
+            <div class="feature-card-preview">
+                <div class="card-header">Auto-Summary</div>
+                <div class="card-content">
+                    <span class="dot dot-1"></span>
+                    <span class="dot dot-2"></span>
+                    <span class="dot dot-3"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <h2>Why StudyFlow?</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">🤖</div>
+                <h3>AI-Powered Summaries</h3>
+                <p>Convert long notes into concise summaries automatically</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📇</div>
+                <h3>Smart Flashcards</h3>
+                <p>Generate flashcards from any note instantly</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📅</div>
+                <h3>Study Schedule</h3>
+                <p>AI-optimized schedule based on your learning pace</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">👥</div>
+                <h3>Collaborate</h3>
+                <p>Share notes and study together with classmates</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Modals -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Login to StudyFlow</h2>
+            <form onsubmit="handleLogin(event)">
+                <input type="email" placeholder="Email" required id="loginEmail">
+                <input type="password" placeholder="Password" required id="loginPassword">
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+            <p class="modal-switch">Don't have an account? <a href="#" onclick="switchToSignup()">Sign up</a></p>
+        </div>
+    </div>
+
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSignupModal()">&times;</span>
+            <h2>Join StudyFlow</h2>
+            <form onsubmit="handleSignup(event)">
+                <input type="text" placeholder="Full Name" required id="signupName">
+                <input type="email" placeholder="Email" required id="signupEmail">
+                <input type="password" placeholder="Password (min 6 chars)" required id="signupPassword">
+                <input type="password" placeholder="Confirm Password" required id="signupPasswordConfirm">
+                <button type="submit" class="btn-primary">Create Account</button>
+            </form>
+            <p class="modal-switch">Already have an account? <a href="#" onclick="switchToLogin()">Login</a></p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 StudyFlow. Built by students, for students. | Frontier Cascadia</p>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

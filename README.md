@@ -71,7 +71,7 @@ cd StudyFlow/backend
 
 # Create and activate virtual environment
 python3 -m venv venv
-.\venv\Scripts\activate.bat  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
